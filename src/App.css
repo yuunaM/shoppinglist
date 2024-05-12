@@ -1,10 +1,152 @@
-.App {
-  text-align: center;
+body {
+  height: 100vh;
+  padding: 0;
+  margin: 5rem 0 0 0;
+  background-size: auto auto;
+  background-color: rgba(200, 249, 252, 1);
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 24px, rgba(144, 195, 230, 1) 24px, rgba(144, 195, 230, 1) 48px );
+  animation: anime_stripe_1 .8s infinite linear;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@keyframes anime_stripe_1 {
+  /* 0% {  background-position-x: 0;}
+  100% {  background-position-x: -100vw;} */
+}
+
+::placeholder {
+  color: #ef9292;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.emoji {
+  font-size: 4rem;
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: -2rem;
+}
+
+.wrap {
+  width: 330px;
+  margin: auto;
+  padding: 15px;
+  border-radius: 4px;
+  background: #ef9292;
+  box-shadow: 6px 6px 9px #455a82;
+  color: #fff;
+  position: relative;
+}
+
+li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+li:not(:last-child) {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ffcccc;
+}
+
+.couner {
+  background: #fff;
+  padding: 3px 0;
+  border-radius: 50px;
+  color: #ef9292;
+  margin-right: 9px;
+}
+
+.fa-chevron-left,
+.fa-chevron-right {
+    padding: 0 14px 0
+}
+
+.couner_wrap {
+  display: flex;
+  align-items: center;
+}
+
+.couner span {
+  color: #ef9292;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+ul {
+  margin: 2rem auto;
+  padding: 0;
+  width: 84%;
+}
+
+.addBtn {
+  background: #fff;
+  border: none;
+  color: #ef9292;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50px;
+  margin-left: 10px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="text"] {
+  border: none;
+  border-radius: 50px;
+  padding: 7px 12px;
+  width: 65%;
+}
+
+input[type=checkbox] {
+  appearance: none;
+  position: relative;
+}
+
+input[type=checkbox]:before {    
+  display: block;
+  position: absolute;
+  content: "";
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  left: -27px;
+  background-color: #fff;
+  top: -4px;
+  bottom: 0;
+  margin: auto;
+}
+
+input[type=checkbox]:checked:after {
+  display: block;
+  position: absolute;
+  content: "";
+  width: 12px;     
+  height:5px;
+  border-bottom: 3px solid;
+  border-left: 3px solid;
+  border-color:  #ef9292;
+  transform: rotate(-45deg);
+  top: -2px;         
+  left: -22px;
+  margin-top: -5px;
+}
+
+label {
+  padding-left: 23px;
+  position: relative;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -13,26 +155,4 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
