@@ -12,7 +12,7 @@ function App() {
 
   return (
       <div className='wrap'>
-          <p className='emoji'>📌</p>
+          <p className='emoji'>📎</p>
           <h1>Happy Shopping</h1>
           <Form handleAddItem={handleAddItem} lists={lists} />
           <List lists={lists} setLists={setLists} /> {/*　③Stateが更新されたことによりListコンポーネントがサイレンダリング */}
