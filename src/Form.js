@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, addDoc } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import db from "./config/firebase";
 
 const Form = ({ handleAddItem, lists }) => {
@@ -41,7 +43,7 @@ const Form = ({ handleAddItem, lists }) => {
               onChange={onChange}
               placeholder='add your List...'
             />
-            <button className='addBtn' type='submit'>＋</button>
+            <FontAwesomeIcon icon={faPlus} className='addBtn' type='submit'/>
         </form>
     );
 }
