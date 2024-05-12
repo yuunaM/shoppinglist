@@ -90,11 +90,13 @@ ul {
 .addBtn {
   background: #fff;
   border: none;
-  color: #ef9292;
-  font-weight: bold;
-  font-size: 18px;
   border-radius: 50px;
+  color: #ef9292;
+  font-size: 18px;
+  font-weight: bold;
   margin-left: 10px;
+  padding: 7px;
+  line-height: 1;
 }
 
 form {
