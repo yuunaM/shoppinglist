@@ -293,12 +293,15 @@ button.allDel {
   .couner {
     padding: 4px 0;
   }
-  .button.allDel {
+  button.allDel {
     font-size: 20px;
   }
   i:not(:last-child) {
     margin-bottom: 15px;
     padding-bottom: 15px;
+  }
+  input[type=text] {
+    font-size: 19px;
   }
 }
 
