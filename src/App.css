@@ -119,7 +119,6 @@ ul {
 }
 
 li label {
-  width: 55%;
   margin-right: 3%;
   display: flex;
   align-items: center;
@@ -127,10 +126,6 @@ li label {
 
 li span {
   line-height: 1.3;
-}
-
-.couner_wrap {
-  width: 42%;
 }
 
 .couner_wrap > *:not(:last-child) {
@@ -269,10 +264,16 @@ button.allDel {
   h1 {
     font-size: 5.5vh;
   }
+  .couner_wrap {
+    width: 42%;
+  }
+  li label {
+    width: 55%;
+  }
 }
 
 
-@media screen and (max-width: 768px) {
+@media (min-width: 431px) and (max-width: 768px) {
   .wrap {
     width: 87%;
   }
@@ -309,5 +310,26 @@ button.allDel {
 }
 
 
-
+@media screen and (max-width: 430px) {
+  .wrap {
+    width: 94%;
+    box-sizing: border-box;
+  }
+  li {
+    display: block;
+  }
+  li > * {
+    width: 100%;
+  }
+  li label {
+    margin-bottom: 10px;
+  }
+  .couner_wrap {
+    justify-content: space-around;
+  }
+  .fa-chevron-left, 
+  .fa-chevron-right {
+    padding: 0 17px 0;
+  }
+}
 
