@@ -7,15 +7,15 @@ import db from "./config/firebase";
 const List = ({ lists, setLists }) => { 
     return (
         <>
-        {lists.length === 0 ? (
-            <p className='empty_txt'>Let's add list!</p>
-        ) : (
-            <ul>
-                {lists.map((item, index) => (
-                    <ListItem key={item.id} itemId={index} item={item} setLists={setLists} />
-                ))}
-            </ul>
-        )}
+            {lists.length === 0 ? (
+                <p className='empty_txt'>Let's add list!</p>
+            ) : (
+                <ul>
+                    {lists.map((item, index) => (
+                        <ListItem key={item.id} itemId={index} item={item} setLists={setLists} />
+                    ))}
+                </ul>
+            )}
         </>
     );
 }
@@ -24,8 +24,8 @@ const ListItem = ({ itemId, item, setLists }) => {
     const [count, setCount] = useState(item.count); // dbから取得したcountプロパティを初期値に設定
     const [done, setDone] = useState(false);
     const [docId, setDocId] = useState(null);
+    const [buy, setBuy] = useState(false);
     const [listvalue, setListvalue] = useState(item.item); // dbから取得したitemプロパティを初期値に設定
-    const previousCountRef = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -57,24 +57,23 @@ const ListItem = ({ itemId, item, setLists }) => {
     useEffect(() => {
         const unsubscribe = onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
             setCount(docSnapshot.data().count);
-            // const newCount = docSnapshot.data().count; //変更後のcount
-            // const previousCount = previousCountRef.current; // 変更前のcount
-
-            // if (previousCount !== newCount) {
-            //     setCount(newCount);
-            //     previousCountRef.current = newCount;
-            // }
         });
         return () => unsubscribe();
-    }, [item.id]);
+    }, [count]);
 
     const keyDown = async (e) => {
         if (e.key === 'Enter' && listvalue.trim() !== '') { // 入力エリアが空欄ではなく、Enterが押されたら
             e.preventDefault();
-            await updateDoc(doc(db, 'shoppinglist', item.id), { item: listvalue }); // リスト内容が変更されたものと、同一のidを持つデータをshoppinglist dbから探し、更新
+            await updateDoc(doc(db, 'shoppinglist', item.id), { item: listvalue }); // リスト内容が変更されたものと、同一のidを持つデータをshoppinglist dbから探して更新
             setDone(false); // 編集モード終了
         } 
     }
+
+    useEffect(() => {
+        onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
+            setListvalue(docSnapshot.data().item);
+        });
+    }, [item.id])
 
     const editValue = (e) => {
         setListvalue(e.target.value);
@@ -87,7 +86,7 @@ const ListItem = ({ itemId, item, setLists }) => {
         )
     } else {
         listContent = (
-            <span>{listvalue}</span>
+            <span onClick={() => setBuy(!buy)} style={{ textDecoration: buy? 'line-through' : 'none' }}>{listvalue}</span>
         )
     }
 

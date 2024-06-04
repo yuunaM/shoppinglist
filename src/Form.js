@@ -25,7 +25,7 @@ const Form = ({ handleAddItem, lists }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (value !== '') {
-            await addDoc(collection(db, 'shoppinglist'), { // 入力欄がからでなければshoppinglist dbにitemとcountとというデータを追加
+            await addDoc(collection(db, 'shoppinglist'), { // 入力欄が空でなければshoppinglist dbにitemとcountとというデータを追加
                 item: value, 
                 count: 0 
             });
