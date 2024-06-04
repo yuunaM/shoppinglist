@@ -8,43 +8,46 @@ const Form = ({ handleAddItem, lists }) => {
     const [value, setValue] = useState('');
 
     useEffect(() => {
+        // shoppinglistコレクションを監視し、対象コレクション全体のデータを第二引数であるsnapshotへ格納
         const unsubscribe = onSnapshot(collection(db, 'shoppinglist'), (snapshot) => {
-            snapshot.docChanges().forEach((change) => { // コレクションを監視し、変更があれば処理
-                if (change.type === 'added') {
-                    const newItem = change.doc.data().item;
-                    // newItemが既にリストに存在しない場合のみ追加する
-                    if (!lists.includes(newItem)) {
-                        handleAddItem(newItem);
+            snapshot.docChanges().forEach((change) => { // 監視対象のコレクションに変更があればforEachで全体を処理
+                if (change.type === 'added') { //変更がadded（追加）タイプであれば処理
+                    const newItem = change.doc.data().item; // 対象コレクション内のitemドキュメントをnewItemに代入
+                    if (!lists.some(listItem => listItem.id === change.doc.id)) { // 追加されたアイテムが既にリストに存在しない場合
+                        handleAddItem({ id: change.doc.id, item: newItem }); // アイテムに id を付与して追加
                     }
                 }
             });
         });
-        
-        return () => unsubscribe();
+        return () => unsubscribe(); // クリーンアップ関数
     }, [handleAddItem, lists]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (value !== '') {
-            await addDoc(collection(db, 'shoppinglist'), { item: value, count: 0 });
-            handleAddItem(value); // ①フォームの値をApp.jsに渡す
-            setValue(''); //入力後、フォームを空に
+            await addDoc(collection(db, 'shoppinglist'), { // 入力欄がからでなければshoppinglist dbにitemとcountとというデータを追加
+                item: value, 
+                count: 0 
+            });
+            setValue(''); // 入力後、フォームを空に
         }
-    }
+      }
 
     const onChange = (e) => {
         setValue(e.target.value); // フォームの値が変更されたときにstateを更新
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type='text' 
-              value={value} 
-              onChange={onChange}
-              placeholder='add your List...'
+        <>
+            <form onSubmit={handleSubmit}>
+                <input type='text' 
+                value={value} 
+                onChange={onChange}
+                placeholder='add your List...'
             />
-            <FontAwesomeIcon icon={faPlus} className='addBtn' type='submit'/>
-        </form>
+                <FontAwesomeIcon icon={faPlus} onClick={handleSubmit} className='addBtn' type='submit'/>
+            </form>
+        </>
     );
 }
 
