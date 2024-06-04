@@ -277,15 +277,29 @@ button.allDel {
     font-size: 9vw;
   }
   li label {
-    width: 51%;
+    width: 47%;
+    font-size: 18px;
   }
   .couner_wrap {
-    width: 40%;
+    width: 43%;
   }
   ul {
-    margin: 5% auto;
+    margin: 7% auto 10%;
     width: 90%;
-}
+  }
+  .couner_wrap svg {
+    font-size: 20px;
+  }
+  .couner {
+    padding: 4px 0;
+  }
+  .button.allDel {
+    font-size: 20px;
+  }
+  i:not(:last-child) {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
 }
 
 
