@@ -23,7 +23,6 @@ h1 {
   font-family: "Bad Script", cursive;
   font-style: normal;
   transform: skewY(-5deg);
-  letter-spacing: 2px;
 }
 
 .emoji {
@@ -191,18 +190,20 @@ input[type=checkbox]:before {
 }
 
 input[type=checkbox]:checked:after {
-  display: block;
-  position: absolute;
+  border-bottom: 3px solid #ef9292;
+  border-left: 3px solid #ef9292;
+  border-right-color: #ef9292;
+  border-top-color: #ef9292;
   content: "";
-  width: 12px;     
-  height:5px;
-  border-bottom: 3px solid;
-  border-left: 3px solid;
-  border-color:  #ef9292;
-  transform: rotate(-45deg);
-  top: 0;         
+  display: block;
+  height: 5px;
   left: -22px;
-  margin-top: -5px;
+  margin: auto;
+  position: absolute;
+  top: -3px;
+  bottom: 0;
+  transform: rotate(-45deg);
+  width: 12px;
 }
 
 label {
@@ -216,7 +217,7 @@ button.allDel {
   border-radius: 50px;
   padding: 7px 14px 2px;
   width: 50%;
-  margin: 1rem auto;
+  margin: 1rem auto 2.5rem;
   display: block;
   color: #ef9292;
   font-size: 16px;
@@ -296,7 +297,7 @@ button.allDel {
   button.allDel {
     font-size: 20px;
   }
-  i:not(:last-child) {
+  li:not(:last-child) {
     margin-bottom: 15px;
     padding-bottom: 15px;
   }
