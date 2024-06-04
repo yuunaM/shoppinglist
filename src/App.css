@@ -22,7 +22,6 @@ h1 {
   margin-top: 2rem;
   font-family: "Bad Script", cursive;
   font-style: normal;
-  font-size: 5.5vh;
   transform: skewY(-5deg);
   letter-spacing: 2px;
 }
@@ -260,16 +259,35 @@ button.allDel {
   }
 }
 
-@media screen and (max-width: 768px) {
-  .wrap {
-    width: 80%;
-  }
-}
-
 @media screen and (min-width: 768px) {
   .wrap {
       max-width: 400px;
   }
+  h1 {
+    font-size: 5.5vh;
+  }
 }
+
+
+@media screen and (max-width: 768px) {
+  .wrap {
+    width: 87%;
+  }
+  h1 {
+    font-size: 9vw;
+  }
+  li label {
+    width: 51%;
+  }
+  .couner_wrap {
+    width: 40%;
+  }
+  ul {
+    margin: 5% auto;
+    width: 90%;
+}
+}
+
+
 
 
