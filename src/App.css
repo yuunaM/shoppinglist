@@ -3,9 +3,7 @@ body {
   padding: 0;
   margin: 5rem 0 0 0;
   background-size: auto auto;
-  /* background-color: rgba(200, 249, 252, 1);
-  background-image: repeating-linear-gradient(-45deg, transparent, transparent 24px, rgba(144, 195, 230, 1) 24px, rgba(144, 195, 230, 1) 48px ); */
-  background-color: #e2eaee;
+  background-image: radial-gradient(circle, rgb(255 255 255), rgb(215 210 198) 80%);
 }
 
 @keyframes anime_stripe_1 {
@@ -57,7 +55,7 @@ h1 {
   left: 0;
   right: 0;
   margin: auto;
-  border-top: 20px dotted #e2eaee;
+  border-top: 20px dotted #E2DDD1FF;
 }
 
 .wrap:after {

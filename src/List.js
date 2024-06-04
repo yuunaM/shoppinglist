@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronLeft, faXmark, faPen } from "@fortawesome/free-solid-svg-icons";
-import { collection, getDocs, deleteDoc, doc, updateDoc, addDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, updateDoc, addDoc, onSnapshot } from "firebase/firestore";
 import db from "./config/firebase";
 
 const List = ({ lists, setLists }) => { 
@@ -21,10 +21,11 @@ const List = ({ lists, setLists }) => {
 }
 
 const ListItem = ({ itemId, item, setLists }) => {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(item.count); // dbから取得したcountプロパティを初期値に設定
     const [done, setDone] = useState(false);
     const [docId, setDocId] = useState(null);
-    const [listvalue, setListvalue] = useState(item.item);
+    const [listvalue, setListvalue] = useState(item.item); // dbから取得したitemプロパティを初期値に設定
+    const previousCountRef = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,20 +41,32 @@ const ListItem = ({ itemId, item, setLists }) => {
     }, [item]);
 
     const countUp = async () => {
-        setCount(prev => prev + 1);
-        await updateCount(item.id, count + 1);
+        const newCount = count + 1;
+        setCount(newCount);
+        await updateDoc(doc(db, 'shoppinglist', item.id), { count: newCount });
     }
 
     const countDown = async () => {
         if (count > 0) {
-            setCount(prev => prev - 1);
-            await updateCount(item.id, count - 1);
+            const newCount = count - 1;
+            setCount(newCount);
+            await updateDoc(doc(db, 'shoppinglist', item.id), { count: newCount });
         }
     }
 
-    const updateCount = async (itemId, newCount) => {
-        await updateDoc(doc(db, 'shoppinglist', itemId), { count: newCount });
-    }
+    useEffect(() => {
+        const unsubscribe = onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
+            setCount(docSnapshot.data().count);
+            // const newCount = docSnapshot.data().count; //変更後のcount
+            // const previousCount = previousCountRef.current; // 変更前のcount
+
+            // if (previousCount !== newCount) {
+            //     setCount(newCount);
+            //     previousCountRef.current = newCount;
+            // }
+        });
+        return () => unsubscribe();
+    }, [item.id]);
 
     const keyDown = async (e) => {
         if (e.key === 'Enter' && listvalue.trim() !== '') { // 入力エリアが空欄ではなく、Enterが押されたら
@@ -81,7 +94,7 @@ const ListItem = ({ itemId, item, setLists }) => {
     const handleDelete = async () => {
         await deleteDoc(doc(db, 'shoppinglist', item.id)); // 削除されたリストと同一のidを持つデータをdbから削除
         setLists(prevLists => prevLists.filter(listItem => listItem.id !== item.id)); // ブラウザ上からも削除
-      }
+    }
 
     return (
         <li>
