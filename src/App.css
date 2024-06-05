@@ -224,7 +224,6 @@ button.allDel {
 
 .couner_wrap svg {
   cursor: pointer;
-  font-size: 20px;
 }
 
 .empty_txt {
@@ -267,6 +266,9 @@ button.allDel {
     margin-bottom: 10px;
     padding-bottom: 10px;
   }
+  .couner_wrap svg {
+    font-size: 16px;
+  }
 }
 
 
@@ -297,6 +299,9 @@ button.allDel {
   input[type=text] {
     font-size: 17px;
   }
+  .couner_wrap svg {
+    font-size: 20px;
+  }
 }
 
 
@@ -324,6 +329,9 @@ button.allDel {
   .fa-chevron-left, 
   .fa-chevron-right {
     padding: 0 17px 0;
+  }
+  .couner_wrap svg {
+    font-size: 20px;
   }
 }
 
