@@ -75,6 +75,9 @@ li {
   justify-content: space-between;
   position: relative;
   transition: .4s;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ffcccc;
 }
 
 .couner {
@@ -102,15 +105,9 @@ li {
 }
 
 ul {
-  margin: 2rem auto;
+  margin: 2rem auto 3rem;
   padding: 0;
   width: 87%;
-}
-
-li:not(:last-child) {
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px dashed #ffcccc;
 }
 
 li label {
@@ -209,7 +206,7 @@ button.allDel {
   border-radius: 50px;
   padding: 7px 14px 2px;
   width: 50%;
-  margin: 1rem auto 2.5rem;
+  margin: 0 auto 2.5rem;
   display: block;
   color: #ef9292;
   font-size: 16px;
@@ -227,6 +224,7 @@ button.allDel {
 
 .couner_wrap svg {
   cursor: pointer;
+  font-size: 20px;
 }
 
 .empty_txt {
@@ -290,9 +288,6 @@ button.allDel {
     margin: 7% auto 10%;
     width: 90%;
   }
-  .couner_wrap svg {
-    font-size: 20px;
-  }
   .couner {
     padding: 4px 0;
   }
@@ -319,6 +314,9 @@ button.allDel {
   li label {
     margin-bottom: 10px;
     font-size: 19px;
+  }
+  .couner {
+    padding: 4px 0;
   }
   .couner_wrap {
     justify-content: space-around;

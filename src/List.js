@@ -26,7 +26,7 @@ const ListItem = ({ item, setLists }) => {
     const [buy, setBuy] = useState(false);
     const [listvalue, setListvalue] = useState(item.item); // 親からもったlist内のitemプロパティを初期値に設定
 
-    // アイテム個数
+    // アイテム個数state
     const countUp = async () => {
         const newCount = count + 1;
         setCount(newCount);
@@ -41,7 +41,6 @@ const ListItem = ({ item, setLists }) => {
         }
     }
 
-    // dbのアイテム数が変更されたらローカルも更新
     useEffect(() => {
         const unsubscribe = onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
             if (docSnapshot.exists()) {
@@ -51,7 +50,7 @@ const ListItem = ({ item, setLists }) => {
         return () => unsubscribe();
     }, [count]);
 
-    // リストの再編集
+    // リストの再編集state
     const keyDown = async (e) => {
         if (e.key === 'Enter' && listvalue.trim() !== '') { // 入力エリアが空欄ではなく、Enterが押されたら
             e.preventDefault();
@@ -60,7 +59,6 @@ const ListItem = ({ item, setLists }) => {
         } 
     }
 
-    // リスト再編集後のstate更新
     useEffect(() => {
         onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => { // 変更対象のitem.idと同じドキュメントをdocSnapshotに渡す
             if (docSnapshot.exists()) { // docSnapshotと同じデータがdbにあれば
@@ -84,7 +82,7 @@ const ListItem = ({ item, setLists }) => {
         )
     }
 
-    // リストの削除
+    // リストの削除state
     const handleDelete = async () => {
         await deleteDoc(doc(db, 'shoppinglist', item.id)); 
     }
@@ -98,11 +96,26 @@ const ListItem = ({ item, setLists }) => {
         return () => unsub();
     }, [item.id]);
 
+    // 打ち消し線とチェックボックスのstate
+    const toggleBuy = async () => {
+        const newBuy = !buy;
+        await updateDoc(doc(db, 'shoppinglist', item.id), { buy: newBuy });
+    }
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
+            if (docSnapshot.exists()) {
+                setBuy(docSnapshot.data().buy);
+            }
+        });
+        return () => unsub();
+    }, [item.id]);
+
 
     return (
         <li>
             <label>
-                <input type='checkbox'onClick={() => setBuy(!buy)} />
+                <input type='checkbox' checked={buy} onClick={toggleBuy} />
                 {listContent}
             </label>
             <div className='couner_wrap'>
