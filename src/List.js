@@ -11,8 +11,8 @@ const List = ({ lists, setLists }) => {
                 <p className='empty_txt'>Let's add list!</p>
             ) : (
                 <ul>
-                    {lists.map((item, index) => (
-                        <ListItem key={item.id} itemId={index} item={item} setLists={setLists} />
+                    {lists.map((item) => ( // item = lists。 lists内にはitem、countプロパティが含まれている
+                        <ListItem key={item.id} item={item} setLists={setLists} />
                     ))}
                 </ul>
             )}
@@ -20,26 +20,13 @@ const List = ({ lists, setLists }) => {
     );
 }
 
-const ListItem = ({ itemId, item, setLists }) => {
-    const [count, setCount] = useState(item.count); // dbから取得したcountプロパティを初期値に設定
+const ListItem = ({ item, setLists }) => {
+    const [count, setCount] = useState(item.count); // 親からもったlist内のcountプロパティを初期値に設定
     const [done, setDone] = useState(false);
-    const [docId, setDocId] = useState(null);
     const [buy, setBuy] = useState(false);
-    const [listvalue, setListvalue] = useState(item.item); // dbから取得したitemプロパティを初期値に設定
+    const [listvalue, setListvalue] = useState(item.item); // 親からもったlist内のitemプロパティを初期値に設定
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const querySnapshot = await getDocs(collection(db, 'shoppinglist'));
-            querySnapshot.forEach((doc) => {
-                if (doc.data().item === item.item) {
-                    setCount(doc.data().count);
-                    setDocId(doc.id); 
-                }
-            });
-        };
-        fetchData();
-    }, [item]);
-
+    // アイテム個数
     const countUp = async () => {
         const newCount = count + 1;
         setCount(newCount);
@@ -54,24 +41,31 @@ const ListItem = ({ itemId, item, setLists }) => {
         }
     }
 
+    // dbのアイテム数が変更されたらローカルも更新
     useEffect(() => {
         const unsubscribe = onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
-            setCount(docSnapshot.data().count);
+            if (docSnapshot.exists()) {
+                setCount(docSnapshot.data().count);
+            }
         });
         return () => unsubscribe();
     }, [count]);
 
+    // リストの再編集
     const keyDown = async (e) => {
         if (e.key === 'Enter' && listvalue.trim() !== '') { // 入力エリアが空欄ではなく、Enterが押されたら
             e.preventDefault();
             await updateDoc(doc(db, 'shoppinglist', item.id), { item: listvalue }); // リスト内容が変更されたものと、同一のidを持つデータをshoppinglist dbから探して更新
-            setDone(false); // 編集モード終了
+            setDone(false);
         } 
     }
 
+    // リスト再編集後のstate更新
     useEffect(() => {
-        onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
-            setListvalue(docSnapshot.data().item);
+        onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => { // 変更対象のitem.idと同じドキュメントをdocSnapshotに渡す
+            if (docSnapshot.exists()) { // docSnapshotと同じデータがdbにあれば
+                setListvalue(docSnapshot.data().item); // そのitem名でsetListvalueを更新
+            } 
         });
     }, [item.id])
 
@@ -86,21 +80,30 @@ const ListItem = ({ itemId, item, setLists }) => {
         )
     } else {
         listContent = (
-            <span onClick={() => setBuy(!buy)} style={{ textDecoration: buy? 'line-through' : 'none' }}>{listvalue}</span>
+            <span style={{ textDecoration: buy? 'line-through' : 'none' }}>{listvalue}</span>
         )
     }
 
+    // リストの削除
     const handleDelete = async () => {
-        await deleteDoc(doc(db, 'shoppinglist', item.id)); // 削除されたリストと同一のidを持つデータをdbから削除
-        setLists(prevLists => prevLists.filter(listItem => listItem.id !== item.id)); // ブラウザ上からも削除
+        await deleteDoc(doc(db, 'shoppinglist', item.id)); 
     }
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => {
+            if (!docSnapshot.exists()) {
+                setLists(prevLists => prevLists.filter(listItem => listItem.id !== item.id));
+            }
+        });
+        return () => unsub();
+    }, [item.id]);
+
 
     return (
         <li>
             <label>
-                <input type='checkbox' />
+                <input type='checkbox'onClick={() => setBuy(!buy)} />
                 {listContent}
-                {/* <span style={{ textDecoration: done? 'line-through' : 'none' }}>{item}</span> */}
             </label>
             <div className='couner_wrap'>
                 <FontAwesomeIcon icon={faPen} onClick={() => { setDone(!done) }} />

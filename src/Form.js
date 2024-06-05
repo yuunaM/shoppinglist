@@ -27,7 +27,8 @@ const Form = ({ handleAddItem, lists }) => {
         if (value !== '') {
             await addDoc(collection(db, 'shoppinglist'), { // 入力欄が空でなければshoppinglist dbにitemとcountとというデータを追加
                 item: value, 
-                count: 0 
+                count: 0,
+                buy: false
             });
             setValue(''); // 入力後、フォームを空に
         }

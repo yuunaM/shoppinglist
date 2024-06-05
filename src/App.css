@@ -6,11 +6,6 @@ body {
   background-image: radial-gradient(circle, rgb(255 255 255), rgb(215 210 198) 80%);
 }
 
-@keyframes anime_stripe_1 {
-  /* 0% {  background-position-x: 0;}
-  100% {  background-position-x: -100vw;} */
-}
-
 ::placeholder {
   color: #ef9292;
 }
@@ -82,12 +77,6 @@ li {
   transition: .4s;
 }
 
-li:not(:last-child) {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed #ffcccc;
-}
-
 .couner {
   background: #fff;
   padding: 2px 0;
@@ -116,6 +105,12 @@ ul {
   margin: 2rem auto;
   padding: 0;
   width: 87%;
+}
+
+li:not(:last-child) {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #ffcccc;
 }
 
 li label {
@@ -270,6 +265,10 @@ button.allDel {
   li label {
     width: 55%;
   }
+  li:not(:last-child) {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
 }
 
 
@@ -300,10 +299,6 @@ button.allDel {
   button.allDel {
     font-size: 20px;
   }
-  li:not(:last-child) {
-    margin-bottom: 15px;
-    padding-bottom: 15px;
-  }
   input[type=text] {
     font-size: 17px;
   }
@@ -323,6 +318,7 @@ button.allDel {
   }
   li label {
     margin-bottom: 10px;
+    font-size: 19px;
   }
   .couner_wrap {
     justify-content: space-around;
