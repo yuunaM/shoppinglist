@@ -13,4 +13,6 @@
 - <img width="678" alt="67c88585477f9b41ae93ee90c41942e7" src="https://github.com/user-attachments/assets/31c18edf-8fc2-4193-ad89-143f95b78260">
 - 購入したものはチェック、もしくは　×　で削除できる
 - <img width="755" alt="3f1865fd5bc13cc6ef40edd3d9a1c615" src="https://github.com/user-attachments/assets/e369a857-4c08-49b6-8a5b-4576fed8c3e4">
+- 'All delete'で全てのリストを削除できる
+- <img width="777" alt="894a57cefd08d66372d8a1e24ed3a2a5" src="https://github.com/user-attachments/assets/c78f45fa-b4f7-4bc1-bfde-3eb53f9f9aa3">
 - dbでリストを共有しているので、全員が同じリストを閲覧できて何を買ったかもリアルタイムでわかる
