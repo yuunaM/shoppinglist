@@ -1,5 +1,5 @@
 ### URL
-[Happy shoppy](shoppinglist-ten.vercel.app "Happy Shoppy")
+[Happy shoppy](https://shoppinglist-ten.vercel.app/ "Happy Shoppy"){:target="_blank"}
 
 ### アプリケーションの概要
 家族で手分けしながら買い物する機会が多く、
