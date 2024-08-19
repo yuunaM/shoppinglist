@@ -1,26 +1,56 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faChevronLeft, faXmark, faPen } from "@fortawesome/free-solid-svg-icons";
-import { collection, getDocs, deleteDoc, doc, updateDoc, addDoc, onSnapshot } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc, onSnapshot } from "firebase/firestore";
 import db from "./config/firebase";
 
-const List = ({ lists, setLists }) => { 
+const List = ({ lists, setLists }) => {
+
+    const onDragEnd = (result) => {
+        if (!result.destination) return;
+
+        const reorderedLists = Array.from(lists);
+        const [movedItem] = reorderedLists.splice(result.source.index, 1);
+        reorderedLists.splice(result.destination.index, 0, movedItem);
+
+        setLists(reorderedLists);
+    };
+
     return (
-        <>
-            {lists.length === 0 ? (
-                <p className='empty_txt'>Let's add list!</p>
-            ) : (
-                <ul>
-                    {lists.map((item) => ( // item = lists。 lists内にはitem、countプロパティが含まれている
-                        <ListItem key={item.id} item={item} setLists={setLists} />
-                    ))}
-                </ul>
-            )}
-        </>
+        <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+                {(provided) => (
+                    <ul
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                    >
+                        {lists.length === 0 ? (
+                            <p className='empty_txt'>Let's add list!</p>
+                        ) : (
+                            lists.map((item, index) => (
+                                <Draggable key={item.id} draggableId={item.id} index={index}>
+                                    {(provided) => (
+                                        <ListItem
+                                            item={item}
+                                            setLists={setLists}
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            {...provided.dragHandleProps}
+                                        />
+                                    )}
+                                </Draggable>
+                            ))
+                        )}
+                        {provided.placeholder}
+                    </ul>
+                )}
+            </Droppable>
+        </DragDropContext>
     );
 }
 
-const ListItem = ({ item, setLists }) => {
+const ListItem = React.forwardRef(({ item, setLists, ...props }, ref) => {
     const [count, setCount] = useState(item.count); // 親からもったlist内のcountプロパティを初期値に設定
     const [done, setDone] = useState(false);
     const [buy, setBuy] = useState(false);
@@ -56,14 +86,14 @@ const ListItem = ({ item, setLists }) => {
             e.preventDefault();
             await updateDoc(doc(db, 'shoppinglist', item.id), { item: listvalue }); // リスト内容が変更されたものと、同一のidを持つデータをshoppinglist dbから探して更新
             setDone(false);
-        } 
+        }
     }
 
     useEffect(() => {
         onSnapshot(doc(db, 'shoppinglist', item.id), (docSnapshot) => { // 変更対象のitem.idと同じドキュメントをdocSnapshotに渡す
             if (docSnapshot.exists()) { // docSnapshotと同じデータがdbにあれば
                 setListvalue(docSnapshot.data().item); // そのitem名でsetListvalueを更新
-            } 
+            }
         });
     }, [item.id])
 
@@ -78,13 +108,13 @@ const ListItem = ({ item, setLists }) => {
         )
     } else {
         listContent = (
-            <span style={{ textDecoration: buy? 'line-through' : 'none' }}>{listvalue}</span>
+            <span style={{ textDecoration: buy ? 'line-through' : 'none' }}>{listvalue}</span>
         )
     }
 
     // リストの削除state
     const handleDelete = async () => {
-        await deleteDoc(doc(db, 'shoppinglist', item.id)); 
+        await deleteDoc(doc(db, 'shoppinglist', item.id));
     }
 
     useEffect(() => {
@@ -113,7 +143,7 @@ const ListItem = ({ item, setLists }) => {
 
 
     return (
-        <li>
+        <li ref={ref} {...props}>
             <label>
                 <input type='checkbox' checked={buy} onClick={toggleBuy} />
                 {listContent}
@@ -121,14 +151,14 @@ const ListItem = ({ item, setLists }) => {
             <div className='couner_wrap'>
                 <FontAwesomeIcon icon={faPen} onClick={() => { setDone(!done) }} />
                 <div className='couner'>
-                    <FontAwesomeIcon icon={faChevronLeft} onClick={countDown}/>
+                    <FontAwesomeIcon icon={faChevronLeft} onClick={countDown} />
                     <span>{count}</span>
                     <FontAwesomeIcon icon={faChevronRight} onClick={countUp} />
                 </div>
                 <FontAwesomeIcon icon={faXmark} onClick={handleDelete} />
             </div>
         </li>
-    )
-}
+    );
+});
 
 export default List;
