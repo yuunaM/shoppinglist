@@ -367,6 +367,9 @@ li .flex {
   }
   .item_wrap.flex {
     display: block;
-  } 
+  }
+  h1 {
+    font-size: 11vw;
+  }
 }
 
