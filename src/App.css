@@ -300,6 +300,12 @@ li .flex {
   .drug {
     margin-right: 5%;
   }
+  .couner_wrap {
+    justify-content: space-between;
+  }
+  li label {
+    margin-bottom: 10px;
+  }
 }
 
 
@@ -311,11 +317,7 @@ li .flex {
     font-size: 9vw;
   }
   li label {
-    width: 47%;
     font-size: 18px;
-  }
-  .couner_wrap {
-    width: 43%;
   }
   ul {
     margin: 7% auto 10%;
@@ -351,14 +353,10 @@ li .flex {
     width: 100%;
   }
   li label {
-    margin-bottom: 10px;
     font-size: 19px;
   }
   .couner {
     padding: 4px 0;
-  }
-  .couner_wrap {
-    justify-content: space-between;
   }
   .fa-chevron-left, 
   .fa-chevron-right {
