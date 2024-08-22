@@ -20,4 +20,7 @@
 - <img width="400" alt="3f1865fd5bc13cc6ef40edd3d9a1c615" src="https://github.com/user-attachments/assets/e369a857-4c08-49b6-8a5b-4576fed8c3e4">
 - 'All delete'で全てのリストを削除できる
 - <img width="400" alt="894a57cefd08d66372d8a1e24ed3a2a5" src="https://github.com/user-attachments/assets/c78f45fa-b4f7-4bc1-bfde-3eb53f9f9aa3">
+- 野菜、調味料、飲み物など全て混ざった状態でバラバラに入れると店内を行ったり来たり、、<br>そんな時は3本線アイコンでリストを移動して販売コーナー毎にまとめておけます
+- <img width="400" alt="5b21d4aa-d5b4-40fc-95cd-fed3c8e8755a" src="https://github.com/user-attachments/assets/5b21d4aa-d5b4-40fc-95cd-fed3c8e8755a">
 - dbでリストを共有しているので、全員が同じリストを閲覧できて何を買ったかもリアルタイムでわかる
+
