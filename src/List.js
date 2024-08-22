@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faChevronLeft, faXmark, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faChevronLeft, faXmark, faPen, faBars } from "@fortawesome/free-solid-svg-icons";
 import { deleteDoc, doc, updateDoc, onSnapshot } from "firebase/firestore";
 import db from "./config/firebase";
 
@@ -21,10 +21,7 @@ const List = ({ lists, setLists }) => {
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
                 {(provided) => (
-                    <ul
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                    >
+                    <ul {...provided.droppableProps} ref={provided.innerRef}>
                         {lists.length === 0 ? (
                             <p className='empty_txt'>Let's add list!</p>
                         ) : (
@@ -36,7 +33,7 @@ const List = ({ lists, setLists }) => {
                                             setLists={setLists}
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
+                                            dragHandleProps={provided.dragHandleProps}
                                         />
                                     )}
                                 </Draggable>
@@ -50,7 +47,7 @@ const List = ({ lists, setLists }) => {
     );
 }
 
-const ListItem = React.forwardRef(({ item, setLists, ...props }, ref) => {
+const ListItem = React.forwardRef(({ item, setLists, dragHandleProps, ...props }, ref) => {
     const [count, setCount] = useState(item.count); // 親からもったlist内のcountプロパティを初期値に設定
     const [done, setDone] = useState(false);
     const [buy, setBuy] = useState(false);
@@ -144,18 +141,25 @@ const ListItem = React.forwardRef(({ item, setLists, ...props }, ref) => {
 
     return (
         <li ref={ref} {...props}>
-            <label>
-                <input type='checkbox' checked={buy} onClick={toggleBuy} />
-                {listContent}
-            </label>
-            <div className='couner_wrap'>
-                <FontAwesomeIcon icon={faPen} onClick={() => { setDone(!done) }} />
-                <div className='couner'>
-                    <FontAwesomeIcon icon={faChevronLeft} onClick={countDown} />
-                    <span>{count}</span>
-                    <FontAwesomeIcon icon={faChevronRight} onClick={countUp} />
+            <div className='flex'>
+                <div className='drug' {...dragHandleProps}>
+                    <FontAwesomeIcon icon={faBars} />
                 </div>
-                <FontAwesomeIcon icon={faXmark} onClick={handleDelete} />
+                <div className='item_wrap flex'>
+                    <label>
+                        <input type='checkbox' checked={buy} onChange={toggleBuy} />
+                        {listContent}
+                    </label>
+                    <div className='couner_wrap'>
+                        <FontAwesomeIcon icon={faPen} onClick={() => { setDone(!done) }} />
+                        <div className='couner'>
+                            <FontAwesomeIcon icon={faChevronLeft} onClick={countDown} />
+                            <span>{count}</span>
+                            <FontAwesomeIcon icon={faChevronRight} onClick={countUp} />
+                        </div>
+                        <FontAwesomeIcon icon={faXmark} onClick={handleDelete} />
+                    </div>
+                </div>
             </div>
         </li>
     );

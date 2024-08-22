@@ -74,11 +74,9 @@ li {
   display: flex;
   justify-content: space-between;
   position: relative;
-  transition: .4s;
   margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: 1px dashed #ffcccc;
-  cursor: grab;
 }
 
 .couner {
@@ -108,7 +106,7 @@ li {
 ul {
   margin: 2rem auto 3rem;
   padding: 0;
-  width: 87%;
+  width: 89%;
   user-select: none; 
   touch-action: none;
 }
@@ -240,6 +238,19 @@ button.allDel {
   margin: 0;
 }
 
+li .flex {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.drug {
+    cursor: grab;
+    width: 5%;
+}
+
+
+
 @keyframes opa_anime {
   0 {
     opacity: 0.3;
@@ -252,9 +263,10 @@ button.allDel {
   }
 }
 
-@media screen and (min-width: 768px) {
+
+@media screen and (min-width: 769px) {
   .wrap {
-      max-width: 400px;
+      max-width: 470px;
   }
   h1 {
     font-size: 5.5vh;
@@ -271,6 +283,22 @@ button.allDel {
   }
   .couner_wrap svg {
     font-size: 16px;
+  }
+  .item_wrap.flex {
+    width: 93%;
+  }
+  .drug {
+    margin-right: 2%;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .item_wrap.flex {
+    width: 90%;
+  }
+  .drug {
+    margin-right: 5%;
   }
 }
 
@@ -305,6 +333,9 @@ button.allDel {
   .couner_wrap svg {
     font-size: 20px;
   }
+  .item_wrap.flex {
+    display: block;
+  }  
 }
 
 
@@ -327,7 +358,7 @@ button.allDel {
     padding: 4px 0;
   }
   .couner_wrap {
-    justify-content: space-around;
+    justify-content: space-between;
   }
   .fa-chevron-left, 
   .fa-chevron-right {
@@ -336,5 +367,8 @@ button.allDel {
   .couner_wrap svg {
     font-size: 20px;
   }
+  .item_wrap.flex {
+    display: block;
+  } 
 }
 
