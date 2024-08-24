@@ -6,6 +6,7 @@ import Form from './Form';
 import List from './List';
 import './App.css';
 import db from "./config/firebase";
+import Complete from './components/Complete';
 
 function App() {
     const [lists, setLists] = useState([]);
@@ -22,15 +23,18 @@ function App() {
     }
 
     return (
-        <div className='wrap'>
-            <p className='emoji'>📎</p>
-            <h1>Happy Shopping</h1>
-            <Form handleAddItem={handleAddItem} lists={lists} allDelete={allDelete} />
-            <List lists={lists} setLists={setLists} /> {/*　③Stateが更新されたことによりListコンポーネントがサイレンダリング */}
-            {lists.length >= 2 ? (
-                <button onClick={allDelete} className='allDel'><FontAwesomeIcon icon={faTrash} className='clearBtn' />all delete</button>
-            ) : null}
-        </div>
+        <>
+            <Complete />
+            <div className='wrap'>
+                <p className='emoji'>📎</p>
+                <h1>Happy Shopping</h1>
+                <Form handleAddItem={handleAddItem} lists={lists} allDelete={allDelete} />
+                <List lists={lists} setLists={setLists} /> {/*　③Stateが更新されたことによりListコンポーネントがサイレンダリング */}
+                {lists.length >= 2 ? (
+                    <button onClick={allDelete} className='allDel'><FontAwesomeIcon icon={faTrash} className='clearBtn' />all delete</button>
+                ) : null}
+            </div>
+        </>
     );
 }
 

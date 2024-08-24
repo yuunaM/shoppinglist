@@ -1,7 +1,7 @@
 body {
   height: 100vh;
   padding: 0;
-  margin: 5rem 0 0 0;
+  margin: 0;
   background-size: auto auto;
   background-image: radial-gradient(circle, rgb(255 255 255), rgb(215 210 198) 80%);
 }
@@ -31,7 +31,7 @@ h1 {
 }
 
 .wrap {
-  margin: auto;
+  margin: 5rem auto 0;
   padding: 15px;
   border-radius: 0 0 4px 4px;
   background: #ef9292;
@@ -107,8 +107,6 @@ ul {
   margin: 2rem auto 3rem;
   padding: 0;
   width: 89%;
-  user-select: none; 
-  touch-action: none;
 }
 
 li label {
@@ -247,6 +245,12 @@ li .flex {
 .drug {
     cursor: grab;
     width: 5%;
+}
+
+.completeWin {
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 
