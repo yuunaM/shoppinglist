@@ -3,10 +3,13 @@ import { onSnapshot, collection } from "firebase/firestore";
 import db from '../config/firebase';
 import Lottie from 'lottie-react';
 import cracker from '../assets/cracker.json'
+import Modal from 'react-modal';
 
+Modal.setAppElement('#root');
 
 const Complete = () => {
     const [comp, setComp] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         const checkIfAllItemsBought = async () => {
@@ -14,6 +17,7 @@ const Complete = () => {
                 const allBought = querySnapshot.docs.every(doc => doc.data().buy === true);
                 if (allBought) {
                     setComp(true);
+                    setModalOpen(true);
                 } else {
                     setComp(false);
                 }
@@ -22,10 +26,14 @@ const Complete = () => {
         checkIfAllItemsBought();
     }, []);
 
+    const handleClose = () => {
+        setModalOpen(false);
+    }
+
     return (
         <>
             {comp && (
-                <div className='completeWin' >
+                <div className='completeWin' style={{ pointerEvents: 'none' }}>
                     <Lottie animationData={cracker} loop={false} />
                 </div >
             )}
